@@ -107,8 +107,6 @@
             prosent = prosentEl.value
             let alkohol = liter * prosent / 100;
 
-            console.log(alkohol);
-
             antallPils = (alkohol / 0.0225).toFixed(2);   //En pils inneholder 0,0225 liter alkohol
 
             resultatEl.innerHTML = "Dette tilsvarer " + antallPils + " pils."
@@ -119,7 +117,7 @@
         function bland() {
             let onsketProsent = onsketProsentEl.value;
             let forhold = prosent / onsketProsent;
-            let blandevann = (forhold - 1) * liter;
+            let blandevann = ((forhold - 1) * liter).toFixed(2) ;
             blandeResultatEl.innerHTML = "For å få ønsket prosent trenger du " + blandevann + " liter blandevann";
 
         }
