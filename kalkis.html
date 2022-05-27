@@ -25,14 +25,43 @@
             padding: 10px;
         }
 
-        #blandeDiv{
+        #blandeDiv {
             background-color: rgb(139, 139, 139);
             border: 2px solid black;
             width: 60%;
             margin: auto;
             margin-top: 20px;
-            display: block;
+            display: none;
             padding: 10px;
+            overflow: auto;
+        }
+
+        #lukk {
+            width: 80px;
+            height: 20px;
+            float: right;
+        }
+
+        #lukk:hover {
+            cursor: pointer;
+            background-color: darkgray;
+        }
+
+        button {
+            padding: 10px;
+            color: black;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+            background-color: rgb(139, 139, 139);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: translate(1px, 1px);
+            /* 1 px til høyre og 1 px ned */
         }
     </style>
 </head>
@@ -49,16 +78,21 @@
     </div>
 
     <div id="blandeDiv">
+        <p id="lukk">Lukk vindu</p>
         <h2>Blanding</h2>
-        <p>Ønsket prosent:</p>
+        <p>Ønsket prosent (%):</p>
         <input type="number" id="onsketProsent">
         <p id="blandeResultat"></p>
     </div>
     <script>
+        let innpakningEl = document.querySelector("#innpakning");
         let literEl = document.querySelector("#liter");
         let prosentEl = document.querySelector("#prosent");
         let resultatEl = document.querySelector("#resultat");
 
+        let lukkVinduEl = document.querySelector("#lukk")
+        let blandeDivEl = document.querySelector("#blandeDiv");
+        let blandeknappEl = document.querySelector("#blanding");
         let onsketProsentEl = document.querySelector("#onsketProsent");
         let blandeResultatEl = document.querySelector("#blandeResultat");
 
@@ -74,20 +108,30 @@
             let alkohol = liter * prosent / 100;
 
             console.log(alkohol);
-            
+
             antallPils = (alkohol / 0.0225).toFixed(2);   //En pils inneholder 0,0225 liter alkohol
 
-            resultatEl.innerHTML = "Dette tilsvarer " + antallPils + " pils." 
+            resultatEl.innerHTML = "Dette tilsvarer " + antallPils + " pils."
         }
 
-        onsketProsentEl.addEventListener("input",bland);
+        onsketProsentEl.addEventListener("input", bland);
 
-        function bland(){
+        function bland() {
             let onsketProsent = onsketProsentEl.value;
             let forhold = prosent / onsketProsent;
-            let blandevann = (forhold-1) * liter;
+            let blandevann = (forhold - 1) * liter;
             blandeResultatEl.innerHTML = "For å få ønsket prosent trenger du " + blandevann + " liter blandevann";
 
+        }
+
+        blandeknappEl.addEventListener("click", visBlanding);
+        function visBlanding() {
+            blandeDivEl.style.display = "block";
+        }
+
+        lukkVinduEl.addEventListener("click", lukkBlading)
+        function lukkBlading() {
+            blandeDivEl.style.display = "none";
         }
     </script>
 </body>

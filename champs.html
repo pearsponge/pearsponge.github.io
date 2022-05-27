@@ -25,10 +25,23 @@
             margin: auto;
             margin-top: 20px;
             padding-left: 50px;
+            overflow: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 
         #overskrift {
             text-align: center;
+            width: 100%;
+        }
+
+        #input{
+            width: 55%;
+        }
+
+        #bildeDiv{
+            width: 45%;
         }
 
         input[type="number"],
@@ -53,43 +66,44 @@
         }
 
         img {
-            position: absolute;
-            top: 100px;
-            left: 800px;
-            ;
+            float: left;
             height: 250px;
         }
     </style>
 </head>
 
 <body>
-    <img alt="bilde"
-        src="https://www.nicepng.com/png/full/246-2465444_ea-help-fut-champions-weekend-league-tool-image.png">
+
 
     <div id="innpakning">
         <div id="overskrift">
             <h1>Champs-kalkulator</h1>
         </div>
-        <p>Kamper igjen:</p>
-        <input type="number" id="kamperIgjen">
-        <p>Antall poeng:</p>
-        <input type="number" id="poeng">
-        <p>Velg rank:</p>
-        <select name="rank" id="rank">
-            <option value="4">Rank 10</option>
-            <option value="12">Rank 9</option>
-            <option value="24">Rank 8</option>
-            <option value="34">Rank 7</option>
-            <option value="45">Rank 6</option>
-            <option value="51">Rank 5</option>
-            <option value="60">Rank 4</option>
-            <option value="67">Rank 3</option>
-            <option value="72">Rank 2</option>
-            <option value="76">Rank 1</option>
-        </select>
-        <p id="resultat"></p>
-        <p id="rankTekst"></p>
-
+        <div id="input">
+            <p>Kamper igjen:</p>
+            <input type="number" id="kamperIgjen">
+            <p>Antall poeng:</p>
+            <input type="number" id="poeng">
+            <p>Velg rank:</p>
+            <select name="rank" id="rank">
+                <option value="4">Rank 10</option>
+                <option value="12">Rank 9</option>
+                <option value="24">Rank 8</option>
+                <option value="34">Rank 7</option>
+                <option value="45">Rank 6</option>
+                <option value="51">Rank 5</option>
+                <option value="60">Rank 4</option>
+                <option value="67">Rank 3</option>
+                <option value="72">Rank 2</option>
+                <option value="76">Rank 1</option>
+            </select>
+            <p id="resultat"></p>
+            <p id="rankTekst"></p>
+        </div>
+        <div id="bildeDiv">
+            <img alt="bilde"
+                src="https://www.nicepng.com/png/full/246-2465444_ea-help-fut-champions-weekend-league-tool-image.png">
+        </div>
     </div>
     <script>
         let kamperIgjenEl = document.querySelector("#kamperIgjen");
