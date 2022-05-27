@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+    <title>Alkis-kalkis</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            background: rgb(0, 0, 0);
+            background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgb(122, 49, 0) 100%);
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            height: 100%;
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        #innpakning {
+            background-color: rgb(139, 139, 139);
+            border: 2px solid black;
+            width: 60%;
+            margin: auto;
+            margin-top: 20px;
+            display: block;
+            padding: 10px;
+        }
+
+        #blandeDiv{
+            background-color: rgb(139, 139, 139);
+            border: 2px solid black;
+            width: 60%;
+            margin: auto;
+            margin-top: 20px;
+            display: block;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="innpakning">
+        <h1>Alkis-kalkis</h1>
+        <p>Volum (L):</p>
+        <input type="number" id="liter">
+        <p>Alkoholprosent (%):</p>
+        <input type="number" id="prosent"><br>
+        <p id="resultat"></p>
+        <button id="blanding">Blanding</button>
+    </div>
+
+    <div id="blandeDiv">
+        <h2>Blanding</h2>
+        <p>Ønsket prosent:</p>
+        <input type="number" id="onsketProsent">
+        <p id="blandeResultat"></p>
+    </div>
+    <script>
+        let literEl = document.querySelector("#liter");
+        let prosentEl = document.querySelector("#prosent");
+        let resultatEl = document.querySelector("#resultat");
+
+        let onsketProsentEl = document.querySelector("#onsketProsent");
+        let blandeResultatEl = document.querySelector("#blandeResultat");
+
+        let liter = "";
+        let prosent = "";
+
+        literEl.addEventListener("input", kalkuler)
+        prosentEl.addEventListener("input", kalkuler)
+
+        function kalkuler() {
+            liter = literEl.value;
+            prosent = prosentEl.value
+            let alkohol = liter * prosent / 100;
+
+            console.log(alkohol);
+            
+            antallPils = (alkohol / 0.0225).toFixed(2);   //En pils inneholder 0,0225 liter alkohol
+
+            resultatEl.innerHTML = "Dette tilsvarer " + antallPils + " pils." 
+        }
+
+        onsketProsentEl.addEventListener("input",bland);
+
+        function bland(){
+            let onsketProsent = onsketProsentEl.value;
+            let forhold = prosent / onsketProsent;
+            let blandevann = (forhold-1) * liter;
+            blandeResultatEl.innerHTML = "For å få ønsket prosent trenger du " + blandevann + " liter blandevann";
+
+        }
+    </script>
+</body>
+
+</html>

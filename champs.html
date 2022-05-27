@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+    <title>Champs-kalkulator</title>
+    <link rel="icon"
+        href="https://www.nicepng.com/png/full/246-2465444_ea-help-fut-champions-weekend-league-tool-image.png"
+        type="image/x-icon">
+    <meta charset="utf-8">
+    <style>
+        body {
+            background: rgb(0, 0, 0);
+            background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(171, 0, 0, 1) 100%);
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            height: 100%;
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        #innpakning {
+            background-color: rgb(139, 139, 139);
+            border: 2px solid black;
+            width: 60%;
+            margin: auto;
+            margin-top: 20px;
+            padding-left: 50px;
+        }
+
+        #overskrift {
+            text-align: center;
+        }
+
+        input[type="number"],
+        select {
+            font-family: inherit;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 5px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+            box-sizing: border-box;
+            display: block;
+            margin-top: 2px;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"],
+        select {
+            min-width: 230px;
+            width: 10%;
+            height: 40px;
+            font-size: 17px;
+        }
+
+        img {
+            position: absolute;
+            top: 100px;
+            left: 800px;
+            ;
+            height: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <img alt="bilde"
+        src="https://www.nicepng.com/png/full/246-2465444_ea-help-fut-champions-weekend-league-tool-image.png">
+
+    <div id="innpakning">
+        <div id="overskrift">
+            <h1>Champs-kalkulator</h1>
+        </div>
+        <p>Kamper igjen:</p>
+        <input type="number" id="kamperIgjen">
+        <p>Antall poeng:</p>
+        <input type="number" id="poeng">
+        <p>Velg rank:</p>
+        <select name="rank" id="rank">
+            <option value="4">Rank 10</option>
+            <option value="12">Rank 9</option>
+            <option value="24">Rank 8</option>
+            <option value="34">Rank 7</option>
+            <option value="45">Rank 6</option>
+            <option value="51">Rank 5</option>
+            <option value="60">Rank 4</option>
+            <option value="67">Rank 3</option>
+            <option value="72">Rank 2</option>
+            <option value="76">Rank 1</option>
+        </select>
+        <p id="resultat"></p>
+        <p id="rankTekst"></p>
+
+    </div>
+    <script>
+        let kamperIgjenEl = document.querySelector("#kamperIgjen");
+        let poengEl = document.querySelector("#poeng");
+        let resultatEl = document.querySelector("#resultat");
+        let rankEl = document.querySelector("#rank");
+        let rankTekstEl = document.querySelector("#rankTekst");
+
+        let kamperIgjen = 0;
+        let kamperSpilt = 0;
+        let poeng = 0;
+        let wins = 0;
+        let rankPoeng = 0;
+
+        function kalkuler() {
+            poeng = poengEl.value;
+            kamperIgjen = kamperIgjenEl.value
+            kamperSpilt = 20 - kamperIgjen;
+            wins = (poeng - kamperSpilt) / 3;
+
+            if (wins >= 0) {
+                resultatEl.innerHTML = "Wins: " + wins;
+            }
+            else {
+                resultatEl.innerHTML = ""
+            }
+
+            rankPoeng = rankEl.value;
+            let manglendePoeng = rankPoeng - poeng;
+            let manglendeWins = Math.ceil((manglendePoeng - kamperIgjen) / 3);
+            if (manglendeWins > 0) {
+                if (manglendeWins <= kamperIgjen) {
+                    rankTekstEl.innerHTML = "Du mangler " + manglendeWins + " wins for å nå " + rankEl.options[rankEl.selectedIndex].text + " (" + rankEl.value + " poeng). Recorden din må da være " + manglendeWins + "-" + (kamperIgjen - manglendeWins);
+                }
+                else {
+                    rankTekstEl.innerHTML = "Du mangler " + manglendeWins + " wins for å nå " + rankEl.options[rankEl.selectedIndex].text + " (" + rankEl.value + " poeng). Dette er ikke mulig";
+                }
+            }
+            else {
+                rankTekstEl.innerHTML = "Du trenger ikke flere wins for å nå " + rankEl.options[rankEl.selectedIndex].text + " (" + rankEl.value + " poeng)";
+            }
+        }
+
+        poengEl.addEventListener("input", kalkuler)
+        kamperIgjenEl.addEventListener("input", kalkuler)
+        rankEl.addEventListener("input", kalkuler);
+
+    </script>
+</body>
+
+</html>
