@@ -69,6 +69,23 @@
             float: left;
             height: 250px;
         }
+
+        button {
+            padding: 10px;
+            color: black;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: linear-gradient(rgba(146, 0, 0, 0.2), transparent);
+            background-color: rgb(139, 139, 139);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: translate(1px, 1px);
+            /* 1 px til høyre og 1 px ned */
+        }
     </style>
 </head>
 
@@ -99,6 +116,9 @@
             </select>
             <p id="resultat"></p>
             <p id="rankTekst"></p>
+            <button id="seier">Legg til seier</button>
+            <button id="tap">Legg til tap</button>
+            <br><br>
         </div>
         <div id="bildeDiv">
             <img alt="bilde"
@@ -112,23 +132,28 @@
         let rankEl = document.querySelector("#rank");
         let rankTekstEl = document.querySelector("#rankTekst");
 
-        let kamperIgjen = 0;
+        let kamperIgjen = 20;
+        kamperIgjenEl.value = kamperIgjen;
         let kamperSpilt = 0;
         let poeng = 0;
+        poengEl.value = poeng;
         let wins = 0;
         let rankPoeng = 0;
 
+        let seierEl = document.querySelector("#seier");
+        let tapEl = document.querySelector("#tap");
+
         function kalkuler() {
             poeng = poengEl.value;
-            kamperIgjen = kamperIgjenEl.value
+            kamperIgjen = kamperIgjenEl.value;
             kamperSpilt = 20 - kamperIgjen;
             wins = (poeng - kamperSpilt) / 3;
 
             if (wins >= 0) {
-                resultatEl.innerHTML = "Wins: " + wins;
+                resultatEl.innerHTML = "Record: " + wins + " - " + (kamperSpilt-wins);
             }
             else {
-                resultatEl.innerHTML = ""
+                resultatEl.innerHTML = "";
             }
 
             rankPoeng = rankEl.value;
@@ -147,9 +172,27 @@
             }
         }
 
-        poengEl.addEventListener("input", kalkuler)
-        kamperIgjenEl.addEventListener("input", kalkuler)
+        poengEl.addEventListener("input", kalkuler);
+        kamperIgjenEl.addEventListener("input", kalkuler);
         rankEl.addEventListener("input", kalkuler);
+
+        seierEl.addEventListener("click",leggTilSeier);
+        tapEl.addEventListener("click",leggTilTap);
+
+        function leggTilSeier(){
+            if(kamperIgjenEl.value > 0){
+            kamperIgjenEl.value -= 1;
+            poengEl.value -= -4;
+            kalkuler();
+            }
+        }
+        function leggTilTap(){
+            if(kamperIgjenEl.value > 0){
+            kamperIgjenEl.value -= 1;
+            poengEl.value -= -1;
+            kalkuler();
+            }
+        }
 
     </script>
 </body>
