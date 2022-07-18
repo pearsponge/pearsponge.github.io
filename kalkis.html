@@ -74,12 +74,14 @@
         <p>Alkoholprosent (%):</p>
         <input type="number" id="prosent"><br>
         <p id="resultat"></p>
+        <p id="total"></p>
         <button id="blanding">Jeg ønsker en spesifikk prosent</button>
         <button id="blandevann">Jeg har blandevann</button>
+        <button id="leggTil">Legg til</button>
     </div>
 
     <div id="blandeDiv" class="underDiv">
-        <p id="lukkBlandeDiv" class="lukk">Lukk vindu</p>
+        <p class="lukk">Lukk vindu</p>
         <h2>Blanding</h2>
         <p>Ønsket prosent (%):</p>
         <input type="number" id="onsketProsent">
@@ -87,7 +89,7 @@
     </div>
 
     <div id="blandevannDiv" class="underDiv">
-        <p id="lukkBlandevannDiv" class="lukk">Lukk vindu</p>
+        <p class="lukk">Lukk vindu</p>
         <h2>Blandevann</h2>
         <p>Mengde blandevann (L):</p>
         <input type="number" id="mengdeBlandevann">
@@ -100,21 +102,22 @@
         let resultatEl = document.querySelector("#resultat");
 
         let blandeknappEl = document.querySelector("#blanding");
-        let lukkBlandeDivEl = document.querySelector("#lukkBlandeDiv")
         let blandeDivEl = document.querySelector("#blandeDiv");
         let onsketProsentEl = document.querySelector("#onsketProsent");
         let blandeResultatEl = document.querySelector("#blandeResultat");
 
         let blandevannKnappEl = document.querySelector("#blandevann");
-        let lukkBlandevannDivEl = document.querySelector("#lukkBlandevannDiv");
         let blandevannDivEl = document.querySelector("#blandevannDiv");
         let mengdeBlandevannEl = document.querySelector("#mengdeBlandevann");
         let blandevannResultatEl = document.querySelector("#blandevannResultat");
 
-        
+        let leggTilEl = document.querySelector("#leggTil");
+        let totalEl = document.querySelector("#total");
 
         let liter = "";
         let prosent = "";
+        let antallPils = 0;
+        let totalMengde = Number(0);
 
         literEl.addEventListener("input", kalkuler)
         prosentEl.addEventListener("input", kalkuler)
@@ -133,18 +136,22 @@
         function bland() {
             let onsketProsent = onsketProsentEl.value;
             let forhold = prosent / onsketProsent;
-            let blandevann = ((forhold - 1) * liter).toFixed(2) ;
-            if(blandevann == "Infinity"){
-            blandeResultatEl.innerHTML = "";
+            let blandevann = ((forhold - 1) * liter).toFixed(2);
+            if (blandevann == "Infinity") {
+                blandeResultatEl.innerHTML = "";
             }
-            else{
+            else {
                 blandeResultatEl.innerHTML = "For å få ønsket prosent trenger du " + blandevann + " liter blandevann";
             }
-
         }
 
-        mengdeBlandevannEl.addEventListener("input",finnProsent)
-        function finnProsent(){
+        leggTilEl.addEventListener("click",function(){
+            totalMengde += Number(antallPils);
+            totalEl.innerHTML = "Totalen din er " + totalMengde + " pils";
+        });
+
+        mengdeBlandevannEl.addEventListener("input", finnProsent)
+        function finnProsent() {
             let mengdeBlandevann = mengdeBlandevannEl.value;
             let forhold = mengdeBlandevann / liter;
             let nyProsent = (prosent / (forhold + 1)).toFixed(2);
@@ -153,22 +160,26 @@
 
         blandeknappEl.addEventListener("click", visBlanding);
         function visBlanding() {
+            lukkVinduer();  
             blandeDivEl.style.display = "block";
-            blandevannDivEl.style.display = "none";
-        }
-        lukkBlandeDivEl.addEventListener("click", lukkBlandeDiv)
-        function lukkBlandeDiv() {
-            blandeDivEl.style.display = "none";
         }
 
         blandevannKnappEl.addEventListener("click", visBlandevann);
         function visBlandevann() {
+            lukkVinduer();
             blandevannDivEl.style.display = "block";
-            blandeDivEl.style.display = "none";
         }
-        lukkBlandevannDivEl.addEventListener("click", lukkBlandevannDiv)
-        function lukkBlandevannDiv() {
-            blandevannDivEl.style.display = "none";
+
+        let lukkVindu = document.querySelectorAll(".lukk");
+        for (let i = 0; i < lukkVindu.length; i++) {
+            lukkVindu[i].addEventListener("click", lukkVinduer);
+        }
+        function lukkVinduer() {
+            let underDiver = document.querySelectorAll(".underDiv");
+            for (let i = 0; i < underDiver.length; i++) {
+                underDiver[i].style.display = "none";
+            }
+
         }
     </script>
 </body>
